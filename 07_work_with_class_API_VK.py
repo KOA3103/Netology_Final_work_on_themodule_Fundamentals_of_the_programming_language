@@ -1,17 +1,14 @@
 import requests
-from my_token import token_y
 from pprint import pprint
 import datetime
-import os, sys
+import os
 import json
 
 """Работа с классами на примере API VK"""
 
-
 def get_tokens_from_file(token_name, file_name ="requiremеnts.txt"):
     # Чтения токенов пользователя по умолчанию из файла requiremеnts.txt
     list_of_tokens = {}
-    # token_name = token_name + ":"
     with open(os.path.join(os.getcwd(), file_name), 'r') as token_file:
         a = True
         while a:
@@ -23,11 +20,8 @@ def get_tokens_from_file(token_name, file_name ="requiremеnts.txt"):
                 key = split_line_token[0]
                 key = key[:-1]
                 value = split_line_token[1]
-                # print(key, value)
                 list_of_tokens[key] = value
-    # TOKEN += list_of_tokens[token_id:]
     TOKEN = list_of_tokens[token_name]
-
     return TOKEN
 
 
@@ -87,7 +81,6 @@ class VK:
                 list_of_photos.append(list_of_photo)
         return list_of_photos
 
-# file_path_to_y = ''
 class YaUploader:
     URL_FILES_LIST: str = 'https://cloud-api.yandex.net/v1/disk/resources/files'
     URL_FILES_RESOURCES: str = 'https://cloud-api.yandex.net/v1/disk/resources'
@@ -112,7 +105,7 @@ class YaUploader:
     def upload(self, replace=False):
 
         """Метод загружает файлы по списку file_list на яндекс диск"""
-        headers = {"Content-Type": "application/json", "Authorization": f"OAuth {token_y}"}
+        headers = {"Content-Type": "application/json", "Authorization": f"OAuth {self.token}"}
         file_path_to_y = self.create_folder_into_YaDisk()
         count = 0
         josn_file =[]
