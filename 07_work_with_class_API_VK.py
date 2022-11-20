@@ -1,6 +1,4 @@
 import requests
-from pathlib import Path
-from urllib.parse import urlencode
 from my_token import token_y
 from pprint import pprint
 import datetime
@@ -89,7 +87,7 @@ class VK:
                 list_of_photos.append(list_of_photo)
         return list_of_photos
 
-file_path_to_y = ''
+# file_path_to_y = ''
 class YaUploader:
     URL_FILES_LIST: str = 'https://cloud-api.yandex.net/v1/disk/resources/files'
     URL_FILES_RESOURCES: str = 'https://cloud-api.yandex.net/v1/disk/resources'
@@ -100,12 +98,11 @@ class YaUploader:
 
     def create_folder_into_YaDisk(self):
         """Создание папки. \n path: Путь к создаваемой папке."""
-        folder_path_to_y = input("Введите название папки куда загрузить файлы: ")
+        folder_path_to_y = input("Введите название папки: ")
         headers = {"Content-Type": "application/json", "Authorization": f"OAuth {self.token}"}
         target_folder = requests.put(f'{self.URL_FILES_RESOURCES}?path={folder_path_to_y}', headers=headers)
         if target_folder.status_code == 201:
-            print(f"Папка {folder_path_to_y} создана! Статус {target_folder.status_code}.\n"
-                  f" Загрузка началась!")
+            print(f"Папка {folder_path_to_y} создана! Статус {target_folder.status_code}")
         else:
             print(f'{target_folder.json().get("message")}! Статус {target_folder.status_code}.\n'
                   f' Загрузка будет выполнена в эту папку!')
@@ -136,14 +133,13 @@ class YaUploader:
             except KeyError:
                 pprint(res)
         pprint(f'Всего: {count}')
-
         with open("data_files_uploded.json", "w") as write_file:
             json.dump(josn_file, write_file)
         pprint(f"Файл data_files_uploded.json создан.\n {josn_file}")
 
 
 
-# Инициализация токенов.
+# Инициализация токенов из файла requiremеnts.txt по ключам токунов TOKEN_VK:  и token_y: .
 vk = VK(get_tokens_from_file('TOKEN_VK'))
 y_uploader = YaUploader(get_tokens_from_file('token_y'))
 
@@ -155,8 +151,7 @@ if __name__ == '__main__':
     # pprint(vk.get_photos_info())
 
     # Создаёт папку на Яндекс.Диске.
-    # y_uploader.create_folder_into_YaDisk()  # Путь (название папки) указываем в кавычках.
+    # y_uploader.create_folder_into_YaDisk()
 
-    # Загружает все файлы из папки проекта upload_folder можно выбоать др. указав путь.
-
+    # Загружает все аватарки из профиля ВК на Ян.Ди.
     y_uploader.upload()
