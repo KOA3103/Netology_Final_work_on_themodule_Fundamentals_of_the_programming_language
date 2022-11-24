@@ -6,7 +6,7 @@ import json
 
 """Работа с классами на примере API VK"""
 
-def get_tokens_from_file(token_name, file_name ="requiremеnts.txt"):
+def get_tokens_from_file(token_name, file_name =r"C:\Users\KOA\Documents\Drive licence\Tokens.txt"):
     # Чтения токенов пользователя по умолчанию из файла requiremеnts.txt
     list_of_tokens = {}
     with open(os.path.join(os.getcwd(), file_name), 'r') as token_file:
@@ -96,9 +96,12 @@ class YaUploader:
         target_folder = requests.put(f'{self.URL_FILES_RESOURCES}?path={folder_path_to_y}', headers=headers)
         if target_folder.status_code == 201:
             print(f"Папка {folder_path_to_y} создана! Статус {target_folder.status_code}")
-        else:
+        elif target_folder.status_code == 409:
             print(f'{target_folder.json().get("message")}! Статус {target_folder.status_code}.\n'
                   f' Загрузка будет выполнена в эту папку!')
+        else:
+            print(f'{target_folder.json().get("message")}! Статус {target_folder.status_code}')
+
         return folder_path_to_y
 
 
