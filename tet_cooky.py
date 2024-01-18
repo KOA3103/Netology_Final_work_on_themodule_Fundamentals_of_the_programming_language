@@ -3,7 +3,7 @@ import datetime
 import os
 import json
 
-path_or_file = r'C:\Users\KOA\Documents\CRYPTO\Multiacc/source_cooky.txt'
+path_or_file = r'C:\Users/source_cooky.txt'
 json_list = []
 with open(os.path.join(os.getcwd(), path_or_file), 'r') as cooky_file:
     a = True
