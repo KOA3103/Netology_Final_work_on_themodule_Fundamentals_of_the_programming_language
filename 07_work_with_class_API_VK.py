@@ -6,7 +6,7 @@ import json
 
 """Работа с классами на примере API VK"""
 
-def get_tokens_from_file(token_name, file_name =r"C:\Users\KOA\Documents\Drive licence\Tokens.txt"):
+def get_tokens_from_file(token_name, file_name =r"C:\Users\Tokens.txt"):
     # Чтения токенов пользователя по умолчанию из файла requiremеnts.txt
     list_of_tokens = {}
     with open(os.path.join(os.getcwd(), file_name), 'r') as token_file:
